@@ -14,10 +14,21 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "resolveJsonModule": true, 
+    "esModuleInterop": true
   },
+ 
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-  }
+    "strictInjectionParameters": true, 
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    
+  },
+  "typeRoots": [
+    "node_modules/@types",
+    "src/typings.d.ts"
+  ]
+  
 }
