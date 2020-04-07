@@ -1,25 +1,37 @@
 //app.component.ts
-import { Component, ViewChild, ɵConsole } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 
-import {MatTableModule, MatTable} from '@angular/material/table';
+import {MatTable} from '@angular/material/table';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
-import data from './data/userdata.json'
-const usersJson:{id:any, name:string}[] =Array.of(data);
+import { Data } from './service/data';
+import { AppService } from './service/app.service';
+
 
 @Component({
+  providers: [AppService],
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+ 
 })
-export class AppComponent {
+export class AppComponent  implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'action'];
-  
-  dataSource = usersJson ;
+  promiseBooks: Promise<Data[]>
+ 
+  errorMessage: String;
+  dataSource : Data[] ;
 
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
 
-  constructor(public dialog: MatDialog) {}
+
+  constructor(public dialog: MatDialog,private bookService: AppService) {}
+  ngOnInit(): void {
+    this.promiseBooks = this.bookService.getBooksWithPromise();
+    this.promiseBooks.then(
+             books => this.dataSource = books,
+             error =>  this.errorMessage = <any>error);
+  }
 
   openDialog(action,obj) {
     obj.action = action;
@@ -49,7 +61,7 @@ export class AppComponent {
     
   }
   updateRowData(row_obj){
-    this.dataSource = this.dataSource.filter((value,key)=>{
+    this.dataSource = this.dataSource.filter((value)=>{
       if(value.id == row_obj.id){
        
         value.name = row_obj.name;
@@ -64,7 +76,7 @@ export class AppComponent {
     });
   }
   deleteRowData(row_obj){
-    this.dataSource = this.dataSource.filter((value,key)=>{
+    this.dataSource = this.dataSource.filter((value)=>{
       return value.id != row_obj.id;
     });
   }

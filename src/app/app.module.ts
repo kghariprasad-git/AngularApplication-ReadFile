@@ -13,12 +13,13 @@ import { MatInputModule } from "@angular/material/input";
 import { MatTableModule } from "@angular/material/table";
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
-
+import { AppService } from './service/app.service';
+import { HttpModule } from '@angular/http';
 @NgModule({
   declarations: [
     AppComponent,
     DialogBoxComponent
-  ],
+   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -28,9 +29,12 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [
+    AppService
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
