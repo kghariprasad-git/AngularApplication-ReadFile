@@ -25,11 +25,11 @@ export class AppComponent  implements OnInit {
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
 
 
-  constructor(public dialog: MatDialog,private bookService: AppService) {}
+  constructor(public dialog: MatDialog,private appService: AppService) {}
   ngOnInit(): void {
-    this.promiseBooks = this.bookService.getBooksWithPromise();
+    this.promiseBooks = this.appService.getDataWithPromise();
     this.promiseBooks.then(
-             books => this.dataSource = books,
+             info => this.dataSource = info,
              error =>  this.errorMessage = <any>error);
   }
 
@@ -52,26 +52,24 @@ export class AppComponent  implements OnInit {
   }
 
   addRowData(row_obj){
+    
     var d = new Date();
+    var randomValue = Math.random();
     this.dataSource.push({
       id:d.getTime(),
-      name:row_obj.name
+      name:row_obj.name,
+      sl: randomValue
     });
     this.table.renderRows();
     
   }
   updateRowData(row_obj){
     this.dataSource = this.dataSource.filter((value)=>{
-      if(value.id == row_obj.id){
-       
+     if(value.sl == row_obj.sl){
+        value.id = row_obj.id;
         value.name = row_obj.name;
        
       }
-      if( value.name == row_obj.name){
-        value.id = row_obj.id;
-        console.log(value.id)
-      }
-    
       return true;
     });
   }

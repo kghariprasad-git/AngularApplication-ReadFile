@@ -12,7 +12,7 @@ export class AppService {
     url = "http://localhost:4200/assets/data/userdata.json";
     constructor(private http:Http) { }
    
-    getBooksWithPromise(): Promise<Data[]> {
+    getDataWithPromise(): Promise<Data[]> {
         return this.http.get(this.url).toPromise()
 	    .then(this.extractData)
 	    .catch(this.handleErrorPromise);
