@@ -55,11 +55,27 @@ export class AppComponent  implements OnInit {
     
     var d = new Date();
     var randomValue = Math.random();
+    var tableId;
+    if(row_obj.id==null){
+      tableId=  d.getTime();
+    }else{
+      tableId =row_obj.id;
+    }
+
     this.dataSource.push({
-      id:d.getTime(),
+     
+      id:tableId,
       name:row_obj.name,
       sl: randomValue
     });
+   // this.appService.postDataWithPromise();
+   const body = { id: tableId,name :row_obj.name,sl : randomValue}
+   this.appService.sendPostRequest(body).subscribe(
+    res => {
+      console.log(res);
+    }
+);
+    this.appService.url
     this.table.renderRows();
     
   }
@@ -72,11 +88,23 @@ export class AppComponent  implements OnInit {
       }
       return true;
     });
+    const body = { id:  row_obj.id,name :row_obj.name}
+    this.appService.sendupdateRequest(body).subscribe(
+      res => {
+        console.log(res);
+      }
+  );
   }
   deleteRowData(row_obj){
     this.dataSource = this.dataSource.filter((value)=>{
       return value.id != row_obj.id;
     });
+    const body = { id:  row_obj.id,name :row_obj.name}
+    this.appService.deleteTabledata(body).subscribe(
+      res => {
+        console.log(res);
+      }
+  );
   }
 
 

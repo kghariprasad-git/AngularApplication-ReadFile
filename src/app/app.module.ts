@@ -15,6 +15,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { AppService } from './service/app.service';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +31,8 @@ import { HttpModule } from '@angular/http';
     MatInputModule,
     MatButtonModule,
     MatInputModule,
-    HttpModule
+    HttpModule,
+    HttpClientModule
   ],
   providers: [
     AppService
